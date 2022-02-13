@@ -11,7 +11,7 @@
     <title>Crud PDO</title>
 </head>
 <body>
-    <section>
+    <section id="esquerda">
         <h2>Cadastrar Usuario</h2>
         <form action="">
             <label for="nome">Nome:</label>
@@ -24,6 +24,27 @@
             <input type="password" name="senha" id="senha">
            <input type="submit" value="Salvar">
         </form>
+    </section>
+    <section id="direita">
+        <table>
+            <tr id="titulo">
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Login</th>
+                <th>Senha</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a id="editar" href="">Editar</a>
+                    <a id="excluir" href="">Excluir</a>
+                </td>
+            </tr>
+        </table>
     </section>
 </body>
 </html>
