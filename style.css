@@ -35,9 +35,6 @@ label, input {
 form {
     line-height: 2;
     padding: 1rem;
-}
-
-table, form {
     width: 80%;
 }
 
@@ -50,6 +47,7 @@ table, form {
 
 table {
     margin: auto;
+    width: 100%;
     line-height: 2rem;
     border-collapse: collapse;
 }
@@ -59,14 +57,14 @@ tr#titulo {
     background-color: rgb(255, 101, 0);
 }
 
-th {
+h2, th {
     text-transform: uppercase;
 }
 
 td {
     padding: 0.25rem;
-    background-color: #dee2e6;
     width: 1rem;
+    border-bottom: 1px solid #dee2e6;
 }
 
 h2 {
@@ -95,7 +93,7 @@ a {
     padding: 0.25rem 0.5rem;
     margin: 0.25rem;
     text-decoration: none;
-    background-color: white;
+    background-color: #dee2e6;
     border-radius: 0.25rem;
     border: 1px solid black;
 }
