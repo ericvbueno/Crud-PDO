@@ -10,5 +10,14 @@
             exit();
         }
     }
+
+    public function buscarUsuarios() {
+        $res = array();
+        $sql = "SELECT * FROM usuario ORDER BY id DESC";
+        $cmd = $this->pdo->query($sql);
+
+        $res = $cmd->fetchAll(PDO::FETCH_ASSOC);
+        return $res;
+    }
 };
 ?>

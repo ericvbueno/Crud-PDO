@@ -1,3 +1,8 @@
+<?php 
+    require_once 'class-pessoa.php';
+    $p = new Pessoa("crud", "localhost", "root", "");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -33,16 +38,28 @@
                 <th>Login</th>
                 <th></th>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a id="editar" href="">Editar</a>
-                    <a id="excluir" href="">Excluir</a>
-                </td>
-            </tr>
+            <?php 
+                $dados = $p->buscarUsuarios();
+                if(count($dados) > 0) {
+                    echo "<tr>";
+                    for($i=0; $i < count($dados); $i++) {
+                        foreach ($dados[$i] as $key => $value) {
+                            if ($key != "id" && $key != "senha" && $key != 'nivel') {
+                                echo "<td>$value</td>";
+                            }
+                        }
+            ?>
+                        <td>
+                            <a id='editar' href="">Editar</a>
+                            <a id='excluir' href="">Excluir</a>
+                        </td>
+                        <?php
+                        echo "</tr>";
+                    }
+                }
+                        ?>
         </table>
     </section>
 </body>
 </html>
+           
