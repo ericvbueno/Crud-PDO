@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
 <body>
     <section id="esquerda">
         <h2>Cadastrar Usuario</h2>
-        <form action="">
+        <form method="POST" action="process/cadastrar.php">
             <label for="nome">Nome:</label>
             <input type="text" name="nome" id="nome">
             <label for="nome">Email:</label>

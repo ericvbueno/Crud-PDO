@@ -32,6 +32,10 @@ label, input {
     outline: none;
 }
 
+input {
+    text-align: center;
+}
+
 form {
     line-height: 2;
     padding: 1rem;

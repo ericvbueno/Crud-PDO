@@ -19,5 +19,24 @@
         $res = $cmd->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     }
+
+    public function cadastrarPessoa($nome, $email, $login, $senha) {
+        //Verifica se já existe esse cadastro
+        $sql = "SELECT id FROM usuario WHERE email = ? ";
+        $cmd = $this->pdo->prepare($sql);
+        $cmd->execute([$email]);
+
+        if($cmd->rowCount() > 0) {
+            return false;
+            exit('Email já cadastrado');
+        }
+        
+        $senha_segura = password_hash($senha, PASSWORD_DEFAULT);
+
+        $sql = "INSERT INTO usuario (nome, email, user_login, senha) values (?, ?, ?, ?)";
+        $cmd = $this->pdo->prepare($sql);
+        $cmd->execute([$nome, $email, $login, $senha_segura]);
+        return true;
+    }
 };
 ?>
