@@ -33,7 +33,7 @@
         
         $senha_segura = password_hash($senha, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO usuario (nome, email, user_login, senha) values (?, ?, ?, ?)";
+        $sql = "INSERT INTO usuario (nome, email, usuario_login, senha) values (?, ?, ?, ?)";
         $cmd = $this->pdo->prepare($sql);
         $cmd->execute([$nome, $email, $login, $senha_segura]);
         return true;

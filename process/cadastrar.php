@@ -10,10 +10,12 @@
         $senha = addslashes($_POST['senha']);
 
         if(!empty($nome) && !empty($email) && !empty($login) && !empty($senha)) {
-            $p->cadastrarPessoa($nome, $email, $login, $senha);
+          if ( !$p->cadastrarPessoa($nome, $email, $login, $senha)) {
+              echo 'Email já cadastrado';
+          }
         } else {
             echo 'Preencha todos os campos';
         }
     }
-    // header('Location: /Projeto PDO/index.php');
+    header('Location: /Projeto PDO/index.php');
 ?>
