@@ -18,7 +18,7 @@
 <body>
     <section id="esquerda">
         <h2>Cadastrar Usuario</h2>
-        <form method="POST" action="process/cadastrar.php">
+        <form method="POST" action="process/process.php">
             <label for="nome">Nome:</label>
             <input type="text" name="nome" id="nome">
             <label for="nome">Email:</label>
@@ -51,7 +51,7 @@
             ?>
                         <td>
                             <a id='editar' href="">Editar</a>
-                            <a id='excluir' href="">Excluir</a>
+                            <a id='excluir' href="process/process.php?id=<?php echo $dados[$i]['id'] ?>">Excluir</a>
                         </td>
                         <?php
                         echo "</tr>";

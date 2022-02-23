@@ -17,5 +17,10 @@
             echo 'Preencha todos os campos';
         }
     }
+
+    if(isset($_GET['id'])) {
+        $id_user = addslashes($_GET['id']);
+        $p->excluirPessoa($id_user);
+    }
     header('Location: /Projeto PDO/index.php');
 ?>

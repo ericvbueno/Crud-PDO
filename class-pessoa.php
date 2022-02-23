@@ -38,5 +38,11 @@
         $cmd->execute([$nome, $email, $login, $senha_segura]);
         return true;
     }
+
+    public function excluirPessoa($id) {
+        $sql = "DELETE FROM usuario WHERE id = ?";
+        $cmd = $this->pdo->prepare($sql);
+        $cmd->execute([$id]);
+    }
 };
 ?>
