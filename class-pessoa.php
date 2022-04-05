@@ -44,5 +44,20 @@
         $cmd = $this->pdo->prepare($sql);
         $cmd->execute([$id]);
     }
+
+    public function buscarDados($id) {
+        $res = array();
+        $sql = "SELECT * FROM usuario WHERE id = ?";
+        $cmd = $this->pdo->prepare($sql);
+        $cmd->execute([$id]);
+        $res = $cmd->fetch(PDO::FETCH_ASSOC);
+        return $res;
+    }
+
+    public function editarPessoa($id, $nome, $email, $login, $senha) {
+        $sql = "UPDATE usuario SET nome = ? SET email = ? SET usuario_login = ? SET  senha = ? WHERE id = ?";
+        $cmd = $this->pdo->prepare($sql);
+        $cmd->execute([$id, $nome, $email, $login, $senha]);
+    }
 };
 ?>
