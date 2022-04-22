@@ -18,8 +18,8 @@ $(document).ready (() => {
                             <td>${email}</td>
                             <td>${usuario_login}</td>
                             <td>
-                                <a id='editar'>Editar</a>
-                                <a id='excluir'>Excluir</a>
+                                <button id='editar' onclick="Editar()">Editar</button>
+                                <button id='excluir' onclick="Excluir(${id})">Excluir</button>
                             </td>
                         </tr>
                     `);
@@ -36,6 +36,7 @@ $(document).ready (() => {
 )
 
 function Editar(id) {
+    console.log("Deu certo");
     $.ajax({
         url: "process/process.php",
         type: "POST",
@@ -49,16 +50,21 @@ function Editar(id) {
     })
 }
 
-function Excluir(id) {
+function Excluir(id_usuario) {
     $.ajax({
-        url: "process/process.php",
+        url: "./class-pessoa.php",
         type: "POST",
-        data: {id_usuario: id},
+        data: {
+            action: 'excluirUsuario',
+            id: id_usuario
+        },
+        dataType: 'json',
         success: (res) => {
-            console.log("Deu certo");
+            console.log("Usuario excluido com sucesso");
+            location.reload();
         },
         error: () => {
-            console.log("Deu ruim");
+            console.log("Erro");
         }
     })
 }

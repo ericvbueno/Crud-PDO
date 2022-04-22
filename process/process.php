@@ -18,11 +18,6 @@
         }
     }
 
-    if(isset($_GET['id'])) {
-        $id_user = addslashes($_GET['id']);
-        $p->excluirPessoa($id_user);
-    }
-
     if(isset($_POST['id_usuario'])) {
         $id_usuario = addslashes($_POST['id_usuario']);
         $res = $p->buscarDados($id_usuario);

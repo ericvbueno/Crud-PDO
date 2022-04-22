@@ -44,6 +44,7 @@ header('Content-Type: application/json');
         $sql = "DELETE FROM usuario WHERE id = ?";
         $cmd = $this->pdo->prepare($sql);
         $cmd->execute([$id]);
+        return true;
     }
 
     public function buscarDados($id) {
@@ -71,6 +72,12 @@ switch($action) {
     case 'buscarUsuarios':
         $dados = $p->buscarUsuarios();
         echo json_encode($dados);
+        break;
+
+    case 'excluirUsuario':
+        $id_user = addslashes($_POST["id"]);
+        $exclusao = $p->excluirPessoa($id_user);
+        echo json_encode($exclusao);
         break;
 }
 ?>
