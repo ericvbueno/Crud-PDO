@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
     class Pessoa {
     private $pdo;
     //conexão com o banco;
@@ -60,4 +61,16 @@
         $cmd->execute([$id, $nome, $email, $login, $senha]);
     }
 };
+
+
+$action = addslashes($_POST["action"]);
+
+$p = new Pessoa("crud", "localhost", "root", "");
+
+switch($action) {
+    case 'buscarUsuarios':
+        $dados = $p->buscarUsuarios();
+        echo json_encode($dados);
+        break;
+}
 ?>
