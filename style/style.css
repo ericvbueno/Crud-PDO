@@ -103,3 +103,23 @@ button {
     cursor: pointer;
     text-transform: uppercase;
 }
+
+.loading {
+    width: 40px;
+    height: 40px;
+    border: 5px solid;
+    border-color: #0084ff #e6e6e6 #e6e6e6;
+    border-radius: 50%;
+    margin: 1rem 20rem 0;
+    animation: spinner 1.0s infinite;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

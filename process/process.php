@@ -20,7 +20,7 @@
 
     if(isset($_POST['id_usuario'])) {
         $id_usuario = addslashes($_POST['id_usuario']);
-        $res = $p->buscarDados($id_usuario);
+        $res = $p->buscarUsuario($id_usuario);
         return $res;
     }
     header('Location: /Projeto PDO/index.php');

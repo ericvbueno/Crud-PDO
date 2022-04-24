@@ -12,7 +12,7 @@ header('Content-Type: application/json');
         }
     }
 
-    public function buscarUsuarios() {
+    public function buscarRegistros() {
         $res = array();
         $sql = "SELECT * FROM usuario ORDER BY id DESC";
         $cmd = $this->pdo->query($sql);
@@ -47,7 +47,7 @@ header('Content-Type: application/json');
         return true;
     }
 
-    public function buscarDados($id) {
+    public function buscarUsuario($id) {
         $res = array();
         $sql = "SELECT * FROM usuario WHERE id = ?";
         $cmd = $this->pdo->prepare($sql);
@@ -69,8 +69,8 @@ $action = addslashes($_POST["action"]);
 $p = new Pessoa("crud", "localhost", "root", "");
 
 switch($action) {
-    case 'buscarUsuarios':
-        $dados = $p->buscarUsuarios();
+    case 'buscarRegistros':
+        $dados = $p->buscarRegistros();
         echo json_encode($dados);
         break;
 

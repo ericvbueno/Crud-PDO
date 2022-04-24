@@ -4,11 +4,20 @@ $(document).ready (() => {
         url: "./class-pessoa.php",
         type: "POST",
         data: {
-            action: 'buscarUsuarios'
+            action: 'buscarRegistros'
         },
         dataType: 'json',
+        beforeSend: () => {
+            if (!$('.loading').length){ 
+                $('table').after(
+                    `<div class="loading">
+                    </div>`
+                );
+            }
+        },    
         success: (res) => {
             console.log(res);
+            $('.loading').remove();
             const html = `
                 ${res.map((dados) => {
                     const {email, id, nivel, nome, senha, usuario_login} = dados;
