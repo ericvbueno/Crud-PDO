@@ -75,6 +75,7 @@ function Cadastrar() {
             console.log("Deu certo");
             $('.loading').remove();
             console.log(res);
+            location.reload();
         },
         error: () => {
             console.log("Deu ruim");

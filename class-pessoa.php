@@ -28,8 +28,9 @@ header('Content-Type: application/json');
         $cmd->execute([$email]);
 
         if($cmd->rowCount() > 0) {
-            return false;
-            exit('Email já cadastrado');
+            $response = 'Email já cadastrado';
+            return $response;
+            exit($response);
         }
         
         $senha_segura = password_hash($senha, PASSWORD_DEFAULT);
@@ -37,7 +38,8 @@ header('Content-Type: application/json');
         $sql = "INSERT INTO usuario (nome, email, usuario_login, senha) values (?, ?, ?, ?)";
         $cmd = $this->pdo->prepare($sql);
         $cmd->execute([$nome, $email, $login, $senha_segura]);
-        return true;
+        $response = 'Email cadastrado com sucesso';
+        return $response;
     }
 
     public function excluirPessoa($id) {
@@ -83,13 +85,12 @@ switch($action) {
                 $senha = addslashes($_POST['senha']);
         
                 if(!empty($nome) && !empty($email) && !empty($login) && !empty($senha)) {
-                  if ( !$p->cadastrarPessoa($nome, $email, $login, $senha)) {
-                    echo json_encode('Email já cadastrado');
-                  }
+                   $response = $p->cadastrarPessoa($nome, $email, $login, $senha);
                 } else {
-                    echo json_encode('Preencha todos os campos');
+                    $response = 'Preencha todos os campos';
                 }
             }
+            echo json_encode($response);
             break;
 
     case 'excluirUsuario':
