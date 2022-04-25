@@ -69,10 +69,28 @@ $action = addslashes($_POST["action"]);
 $p = new Pessoa("crud", "localhost", "root", "");
 
 switch($action) {
+    
     case 'buscarRegistros':
         $dados = $p->buscarRegistros();
         echo json_encode($dados);
         break;
+        
+        case 'cadastrarUsuario':
+            if(isset($_POST['nome'])) {
+                $nome = addslashes($_POST['nome']);
+                $email = addslashes($_POST['email']);
+                $login = addslashes($_POST['login']);
+                $senha = addslashes($_POST['senha']);
+        
+                if(!empty($nome) && !empty($email) && !empty($login) && !empty($senha)) {
+                  if ( !$p->cadastrarPessoa($nome, $email, $login, $senha)) {
+                    echo json_encode('Email já cadastrado');
+                  }
+                } else {
+                    echo json_encode('Preencha todos os campos');
+                }
+            }
+            break;
 
     case 'excluirUsuario':
         $id_user = addslashes($_POST["id"]);

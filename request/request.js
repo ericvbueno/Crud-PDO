@@ -1,4 +1,7 @@
 $(document).ready (() => {
+    $("#salvar").click(function(event){
+        event.preventDefault();
+      });
 
     $.ajax({
         url: "./class-pessoa.php",
@@ -44,6 +47,43 @@ $(document).ready (() => {
     }
 )
 
+function Cadastrar() {
+    let nome = $('#nome').val();
+    let email = $('#email').val();
+    let login = $('#login').val();
+    let senha = $('#senha').val();
+
+    $.ajax({
+        url: "./class-pessoa.php",
+        type: "POST",
+        data: {
+            action: 'cadastrarUsuario',
+            nome:   nome, 
+            email:  email,
+            login:  login,
+            senha:  senha
+            },
+        beforeSend: () => {
+            if (!$('.loading').length){ 
+                $('table').after(
+                    `<div class="loading">
+                    </div>`
+                );
+            }
+        },
+        success: (res) => {
+            console.log("Deu certo");
+            $('.loading').remove();
+            console.log(res);
+        },
+        error: () => {
+            console.log("Deu ruim");
+            $('.loading').remove();
+            console.log(res);
+        }
+    })
+}
+
 function Editar(id) {
     console.log("Deu certo");
     $.ajax({
@@ -68,12 +108,22 @@ function Excluir(id_usuario) {
             id: id_usuario
         },
         dataType: 'json',
+        beforeSend: () => {
+            if (!$('.loading').length){ 
+                $('table').after(
+                    `<div class="loading">
+                    </div>`
+                );
+            }
+        },
         success: (res) => {
             console.log("Usuario excluido com sucesso");
+            $('.loading').remove();
             location.reload();
         },
         error: () => {
             console.log("Erro");
+            $('.loading').remove();
         }
     })
 }

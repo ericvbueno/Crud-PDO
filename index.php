@@ -13,7 +13,7 @@
 <body>
     <section id="esquerda">
         <h2>Cadastrar Usuario</h2>
-        <form method="POST" action="process/process.php">
+        <form>
             <label for="nome">Nome:</label>
             <input type="text" name="nome" id="nome">
             <label for="nome">Email:</label>
@@ -22,7 +22,7 @@
             <input type="text" name="login" id="login">
             <label for="senha">Senha:</label>
             <input type="password" name="senha" id="senha">
-           <input type="submit" value="Salvar">
+           <input type="submit" onclick="Cadastrar()" id="salvar" value="Salvar">
         </form>
     </section>
     <section id="direita">
