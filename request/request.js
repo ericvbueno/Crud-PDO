@@ -30,7 +30,7 @@ $(document).ready (() => {
                             <td>${email}</td>
                             <td>${usuario_login}</td>
                             <td>
-                                <button id='editar' onclick="Editar()">Editar</button>
+                                <button id='editar' onclick="Editar(${id})">Editar</button>
                                 <button id='excluir' onclick="Excluir(${id})">Excluir</button>
                             </td>
                         </tr>
@@ -86,13 +86,20 @@ function Cadastrar() {
 }
 
 function Editar(id) {
-    console.log("Deu certo");
     $.ajax({
-        url: "process/process.php",
+        url: "./class-pessoa.php",
         type: "POST",
-        data: {id_usuario: id},
+        data: {
+            action: 'buscarDadosUsuario',
+            id_usuario: id
+        },
         success: (res) => {
             console.log("Deu certo");
+            const {email, id, nivel, nome, senha, usuario_login} = res;
+            $('#nome').val(nome);
+            $('#email').val(email);
+            $('#login').val(usuario_login);
+            $('#senha').val(senha);
         },
         error: () => {
             console.log("Deu ruim");

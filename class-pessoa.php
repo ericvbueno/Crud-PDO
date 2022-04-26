@@ -30,7 +30,6 @@ header('Content-Type: application/json');
         if($cmd->rowCount() > 0) {
             $response = 'Email já cadastrado';
             return $response;
-            exit($response);
         }
         
         $senha_segura = password_hash($senha, PASSWORD_DEFAULT);
@@ -71,7 +70,6 @@ $action = addslashes($_POST["action"]);
 $p = new Pessoa("crud", "localhost", "root", "");
 
 switch($action) {
-    
     case 'buscarRegistros':
         $dados = $p->buscarRegistros();
         echo json_encode($dados);
@@ -98,5 +96,13 @@ switch($action) {
         $exclusao = $p->excluirPessoa($id_user);
         echo json_encode($exclusao);
         break;
+
+    case 'buscarDadosUsuario':
+        if(isset($_POST['id_usuario'])) {
+            $id_usuario = addslashes($_POST['id_usuario']);
+            $res = $p->buscarUsuario($id_usuario);
+            echo json_encode($res);
+            break;
+        }
 }
 ?>
