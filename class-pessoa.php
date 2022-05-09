@@ -57,10 +57,22 @@ header('Content-Type: application/json');
         return $res;
     }
 
-    public function editarPessoa($id, $nome, $email, $login, $senha) {
-        $sql = "UPDATE usuario SET nome = ? SET email = ? SET usuario_login = ? SET  senha = ? WHERE id = ?";
+    public function editarPessoa($id, $nome, $email, $login) {
+        //Verifica se já existe esse cadastro
+        $sql = "SELECT id FROM usuario WHERE email = ? ";
         $cmd = $this->pdo->prepare($sql);
-        $cmd->execute([$id, $nome, $email, $login, $senha]);
+        $cmd->execute([$email]);
+
+        #Da forma que está não é possivel manter o mesmo email que já está cadastrado pra este registro
+        #Fazer tratativa
+        if($cmd->rowCount() > 0) {
+            $response = 'Email já cadastrado';
+            return $response;
+        }
+
+        $sql = "UPDATE usuario SET nome = ? SET email = ? SET usuario_login = ? WHERE id = ?";
+        $cmd = $this->pdo->prepare($sql);
+        $cmd->execute([$id, $nome, $email, $login]);
     }
 };
 
@@ -75,21 +87,21 @@ switch($action) {
         echo json_encode($dados);
         break;
         
-        case 'cadastrarUsuario':
-            if(isset($_POST['nome'])) {
-                $nome = addslashes($_POST['nome']);
-                $email = addslashes($_POST['email']);
-                $login = addslashes($_POST['login']);
-                $senha = addslashes($_POST['senha']);
-        
-                if(!empty($nome) && !empty($email) && !empty($login) && !empty($senha)) {
-                   $response = $p->cadastrarPessoa($nome, $email, $login, $senha);
-                } else {
-                    $response = 'Preencha todos os campos';
-                }
+    case 'cadastrarUsuario':
+        if(isset($_POST['nome'])) {
+            $nome = addslashes($_POST['nome']);
+            $email = addslashes($_POST['email']);
+            $login = addslashes($_POST['login']);
+            $senha = addslashes($_POST['senha']);
+    
+            if(!empty($nome) && !empty($email) && !empty($login) && !empty($senha)) {
+                $response = $p->cadastrarPessoa($nome, $email, $login, $senha);
+            } else {
+                $response = 'Preencha todos os campos';
             }
-            echo json_encode($response);
-            break;
+        }
+        echo json_encode($response);
+        break;
 
     case 'excluirUsuario':
         $id_user = addslashes($_POST["id"]);
@@ -104,5 +116,21 @@ switch($action) {
             echo json_encode($res);
             break;
         }
+
+    case 'editarUsuario':
+        if(isset($_POST['id_usuario'])) {
+            $id_usuario = addslashes($_POST['id_usuario']);
+            $nome = addslashes($_POST['nome']);
+            $email = addslashes($_POST['email']);
+            $login = addslashes($_POST['login']);
+
+            if(!empty($nome) && !empty($email) && !empty($login)) {
+                $response = $p->editarPessoa($id_usuario, $nome, $email, $login);
+             } else {
+                 $response = 'Preencha todos os campos';
+             }
+        }
+        echo json_encode($response);
+        break;
 }
 ?>
