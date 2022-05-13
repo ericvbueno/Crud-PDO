@@ -58,24 +58,23 @@ header('Content-Type: application/json');
     }
 
     public function editarPessoa($id, $nome, $email, $login) {
-        //Verifica se já existe esse cadastro
-        $sql = "SELECT id FROM usuario WHERE email = ? ";
+        $sql = "UPDATE usuario SET nome = ?, email = ?, usuario_login = ? WHERE id = ?";
+        $cmd = $this->pdo->prepare($sql);
+        $cmd->execute([$nome, $email, $login, $id]);
+        $response = 'Usuario editado com sucesso';
+        return $response;
+    }
+
+    public function validarCadastro($email, $id) {
+        (!$id) ? $and = '' : $and = "AND id = $id";
+
+        $sql = "SELECT id FROM usuario WHERE email = ? $and";
         $cmd = $this->pdo->prepare($sql);
         $cmd->execute([$email]);
-
-        #Da forma que está não é possivel manter o mesmo email que já está cadastrado pra este registro
-        #Fazer tratativa
-        if($cmd->rowCount() > 0) {
-            $response = 'Email já cadastrado';
-            return $response;
-        }
-
-        $sql = "UPDATE usuario SET nome = ? SET email = ? SET usuario_login = ? WHERE id = ?";
-        $cmd = $this->pdo->prepare($sql);
-        $cmd->execute([$id, $nome, $email, $login]);
+        $response = $cmd->fetch(PDO::FETCH_ASSOC);
+        return $response;
     }
 };
-
 
 $action = addslashes($_POST["action"]);
 
@@ -93,11 +92,10 @@ switch($action) {
             $email = addslashes($_POST['email']);
             $login = addslashes($_POST['login']);
             $senha = addslashes($_POST['senha']);
-    
+            $response = 'Preencha todos os campos';
+
             if(!empty($nome) && !empty($email) && !empty($login) && !empty($senha)) {
                 $response = $p->cadastrarPessoa($nome, $email, $login, $senha);
-            } else {
-                $response = 'Preencha todos os campos';
             }
         }
         echo json_encode($response);
@@ -123,11 +121,21 @@ switch($action) {
             $nome = addslashes($_POST['nome']);
             $email = addslashes($_POST['email']);
             $login = addslashes($_POST['login']);
+            $response = 'Preencha todos os campos';
 
             if(!empty($nome) && !empty($email) && !empty($login)) {
-                $response = $p->editarPessoa($id_usuario, $nome, $email, $login);
-             } else {
-                 $response = 'Preencha todos os campos';
+                $id = '';
+                $response = $p->validarCadastro($email, $id);
+
+                if(!$response) {
+                    $response = $p->editarPessoa($id_usuario, $nome, $email, $login);
+                } else {
+                    $id = $id_usuario;
+                    $response = $p->validarCadastro($email, $id);
+                    if($response) {
+                        $response = $p->editarPessoa($id_usuario, $nome, $email, $login);
+                    }
+                }
              }
         }
         echo json_encode($response);
