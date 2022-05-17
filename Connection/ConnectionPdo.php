@@ -42,6 +42,16 @@ class ConnectionPdo extends Connection  {
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getByField ($query, $field) {
+        $pdo = $this->start();
+
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(1, $field);
+        $statement->execute();
+        
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function insert ($data) {
         return 'Implementa aqui depois';
     }

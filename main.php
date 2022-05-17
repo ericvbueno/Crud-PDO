@@ -1,12 +1,8 @@
 <?php
-require('./Connection/ConnectionPdo.php');
-require('./Repositories/UserRepository.php');
+require('./Facade/UserFacade.php');
 
-$connection  = new ConnectionPdo("root", "", "localhost", "crud");
+$user = buscarUsuarioPorId(1);
 
-$userRepository = new UserRepository($connection);
-$users          = $userRepository->getAll();
-
-echo $users[0]["firstName"]."\n";
+echo $user["firstName"]."\n";
 
 
