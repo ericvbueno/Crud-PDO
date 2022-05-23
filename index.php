@@ -22,7 +22,7 @@
             <input type="text" name="login" id="login">
             <label for="senha">Senha:</label>
             <input type="password" name="senha" id="senha">
-           <input type="submit" onclick="Cadastrar()" id="salvar" value="Salvar">
+            <input type="submit" onclick="Cadastrar()" id="salvar" value="Salvar">
         </form>
     </section>
     <section id="direita">
@@ -40,7 +40,7 @@
         </table>
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="request/request.js"></script>
+    <!-- <script src="request/request.js"></script> -->
+    <script src="request/main.js"></script>
 </body>
 </html>
-           

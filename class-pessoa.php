@@ -136,7 +136,7 @@ switch($action) {
                         $response = $p->editarPessoa($id_usuario, $nome, $email, $login);
                     }
                 }
-             }
+            }
         }
         echo json_encode($response);
         break;

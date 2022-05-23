@@ -1,7 +1,7 @@
 $(document).ready (() => {
     $("#salvar").click(function(event){
         event.preventDefault();
-      });
+    });
 
     $.ajax({
         url: "./class-pessoa.php",

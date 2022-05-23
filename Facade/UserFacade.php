@@ -4,20 +4,20 @@ require('./Model/UserRepository.php');
 require('./Controller/BuscarUsuario.php');
 
 function userRepositoryFactory () {
-    $connection = new ConnectionPdo("root", "123", "localhost", "teste");
+    $connection = new ConnectionPdo("root", "", "localhost", "crud");
     return new UserRepository($connection);
 }
 
-function buscarUsuarioPorId ($id) {
+function buscarRegistros () {
     $userRepository = userRepositoryFactory();
-    $buscarUsuario  = new BuscarUsuario($userRepository, $id);
+    $buscarUsuario  = new BuscarUsuario($userRepository);
 
     return $buscarUsuario->execute();
 }
 
-function inserirUsuario ($dadosUsuario) {
-    $userRepository = userRepositoryFactory();
-    $inserirUsuario = new InserirUsuario($userRepository, $dadosUsuario);
+// function inserirUsuario ($dadosUsuario) {
+//     $userRepository = userRepositoryFactory();
+//     $inserirUsuario = new InserirUsuario($userRepository, $dadosUsuario);
 
-    return $inserirUsuario->execute();
-}
+//     return $inserirUsuario->execute();
+// }
