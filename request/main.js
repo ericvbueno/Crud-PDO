@@ -4,7 +4,7 @@ $(document).ready(() => {
     });
 
     $.ajax({
-        url: "./return/main.php",
+        url: "../Crud-PDO/Facade/UserFacade.php",
         type: "POST",
         data: {
             action: 'buscarRegistros'
@@ -13,8 +13,7 @@ $(document).ready(() => {
         beforeSend: () => {
             if (!$('.loading').length){ 
                 $('table').after(
-                    `<div class="loading">
-                    </div>`
+                    `<div class="loading"></div>`
                 );
             }
         },    
@@ -42,7 +41,44 @@ $(document).ready(() => {
         },
         error: () => {
             console.log("Erro");
-            // $('.loading').remove();
+            $('.loading').remove();
         }
     })
 })
+
+function Cadastrar() {
+    let nome = $('#nome').val();
+    let email = $('#email').val();
+    let login = $('#login').val();
+    let senha = $('#senha').val();
+
+    $.ajax({
+        url: "../Crud-PDO/Facade/UserFacade.php",
+        type: "POST",
+        data: {
+            action: 'cadastrarUsuario',
+            nome:   nome, 
+            email:  email,
+            login:  login,
+            senha:  senha
+            },
+        beforeSend: () => {
+            if (!$('.loading').length){ 
+                $('table').after(
+                    `<div class="loading"></div>`
+                );
+            }
+        },
+        success: (res) => {
+            console.log("Deu certo");
+            $('.loading').remove();
+            console.log(res);
+            // location.reload();
+        },
+        error: () => {
+            console.log("Deu ruim");
+            $('.loading').remove();
+            console.log(res);
+        }
+    })
+}

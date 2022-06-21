@@ -10,24 +10,21 @@ class UserRepository {
         return $this->connection->getAll("SELECT * FROM usuario ORDER BY id DESC");
     }
 
-    // function getById ($id) {
-    //     $user = $this->connection->getById("SELECT * FROM users WHERE id = ?", $id);
+    function insert ($userData) {
+        $user = $this->connection->getByField("SELECT * FROM usuario WHERE email = ?", $userData->email);
 
-    //     if (!$user) {
-    //         die("User not found");
-    //     }
-    //     return $user;
-    // }
+        if ($user) {
+            die("User already exists. Check By id: ".$user["id"]);
+        }
 
-    // function insert ($userData) {
-    //     $user = $this->connection->getByField("SELECT * FROM users WHERE email = ?", $userData->email);
+        $nome = $userData->nome;
+        $email = $userData->email;
+        $login = $userData->login;
+        $senha = $userData->senha;
+        $senha_segura = password_hash($senha, PASSWORD_DEFAULT);
 
-    //     if ($user) {
-    //         die("User already exists. Check By id: ".$user["id"]);
-    //     }
+        $insert = $this->connection->insert("INSERT INTO usuario (nome, email, usuario_login, senha) VALUES ($nome, $email, $login, $senha_segura)");
 
-    //     $insert = $this->connection->insert("INSERT INTO users () VALUES ()");
-
-    //     return $insert->rows;
-    // }
+        return $insert->rows;
+    }
 }

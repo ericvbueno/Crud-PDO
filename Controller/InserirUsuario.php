@@ -5,10 +5,11 @@ class InserirUsuario {
 
     function __construct ($userRepository, $rawUserData) {
         $this->userRepository = $userRepository;
-
-        $this->userData->cpf = normalizeCPF($rawUserData->cpf);
-        $this->userData->dataNascimento = validaData($rawUserData->dataNascimento);
-        //...code
+        
+        $this->userData->nome = $rawUserData->nome;
+        $this->userData->email = $rawUserData->email;
+        $this->userData->login = $rawUserData->login;
+        $this->userData->senha = $rawUserData->senha;
     }
 
     function execute () {

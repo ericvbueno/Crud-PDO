@@ -1,5 +1,5 @@
 <?php
-require('./Connection/Connection.php');
+require('Connection.php');
 
 class ConnectionPdo extends Connection  {
 
@@ -52,8 +52,12 @@ class ConnectionPdo extends Connection  {
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function insert ($data) {
-        return 'Implementa aqui depois';
+    public function insert ($query) {
+        $pdo = $this->start();
+        $statement = $pdo->prepare($query);
+        $statement->execute();
+        $response = 'Email cadastrado com sucesso';
+        return $response;
     }
 
 }

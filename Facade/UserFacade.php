@@ -1,23 +1,46 @@
 <?php
-require('./Connection/ConnectionPdo.php');
-require('./Model/UserRepository.php');
-require('./Controller/BuscarUsuario.php');
+require("../Connection/ConnectionPdo.php");
+require('../Model/UserRepository.php');
+require('../Controller/BuscarUsuario.php');
+require('../Controller/InserirUsuario.php');
 
 function userRepositoryFactory () {
     $connection = new ConnectionPdo("root", "", "localhost", "crud");
     return new UserRepository($connection);
 }
 
-function buscarRegistros () {
-    $userRepository = userRepositoryFactory();
-    $buscarUsuario  = new BuscarUsuario($userRepository);
+$action = addslashes($_POST["action"]);
 
-    return $buscarUsuario->execute();
-}
+switch($action) {
+    case 'buscarRegistros':
+        $userRepository = userRepositoryFactory();
+        $buscarUsuario  = new BuscarUsuario($userRepository);
+        $dados = $buscarUsuario->execute();
+        echo json_encode($dados);
+        break;
 
-// function inserirUsuario ($dadosUsuario) {
-//     $userRepository = userRepositoryFactory();
-//     $inserirUsuario = new InserirUsuario($userRepository, $dadosUsuario);
+    case 'cadastrarUsuario':
+        if(isset($_POST['nome'])) {
+            $nome = addslashes($_POST['nome']);
+            $email = addslashes($_POST['email']);
+            $login = addslashes($_POST['login']);
+            $senha = addslashes($_POST['senha']);
+            $response = 'Preencha todos os campos';
 
-//     return $inserirUsuario->execute();
-// }
+            $myObj = new stdClass();
+            $myObj->nome = $nome;
+            $myObj->email = $email;
+            $myObj->login = $login;
+            $myObj->senha = $senha;
+            
+            $rawUserData = json_encode($myObj);
+
+            if(!empty($nome) && !empty($email) && !empty($login) && !empty($senha)) {
+                $userRepository = userRepositoryFactory();
+                $cadastrarPessoa = new InserirUsuario($userRepository, $rawUserData);
+                $response = $cadastrarPessoa->execute();
+            }
+        }
+        echo json_encode($response);
+        break;
+    }
